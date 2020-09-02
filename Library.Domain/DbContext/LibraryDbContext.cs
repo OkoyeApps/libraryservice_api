@@ -9,6 +9,8 @@ namespace Library.Domain.DbContext
     public class LibraryDbContext : IDbContext
     {
         public IMongoDatabase Database { get; set; }
+        public IMongoClient MongoClient { get; set; }
+
         public IMongoCollection<T> GetCollection<T>(string collectionName)
         {
             return Database.GetCollection<T>(collectionName);
@@ -22,6 +24,7 @@ namespace Library.Domain.DbContext
             settings.SslSettings = new SslSettings() { EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12 };
 
             var client = new MongoClient(settings);
+            MongoClient = client;
             Database = client.GetDatabase(Options.DataBaseName);
         }
 

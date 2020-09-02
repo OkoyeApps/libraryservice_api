@@ -3,6 +3,7 @@ using Library.Domain.DBQueries;
 using Library.Domain.Dtos;
 using Library.Domain.Entities;
 using Library.Domain.Interfaces;
+using Library.Domain.Models;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -37,6 +38,12 @@ namespace Library.Api.Services
                 _logger.LogError("Adding of author failed", ex);
                 return (false, ex.Message);
             }
+        }
+
+        public async Task<PagedList<Author>> GetAllAuthors(ResourceParameters resourceParams)
+        {
+            var queryalbe = Collection.AsQueryable();
+            return await Task.FromResult(PagedList<Author>.Create(queryalbe, resourceParams.PageNumber, resourceParams.PageSize));
         }
 
         public async Task<Author> GetAuthorById(ObjectId Id)

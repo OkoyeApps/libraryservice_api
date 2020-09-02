@@ -2,27 +2,49 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Library.Domain.Entities;
 using Library.Domain.Interfaces;
+using Library.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 
 namespace Library.Api.Controllers
 {
-    [Route("api/author/")]
+    [Route("api/author")]
     [ApiController]
     public class AuthorController : ControllerBase
     {
         private readonly IAuthorService _authorService;
+        private readonly IResourceUtil _resourceUtil;
 
-        public AuthorController(IAuthorService authorService)
+        public AuthorController(IAuthorService authorService, IResourceUtil resourceUtil)
         {
             this._authorService = authorService;
+            this._resourceUtil = resourceUtil;
         }
-        public IActionResult Index()
+
+        /// <summary>
+        /// Get all Authors
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        [HttpGet("index", Name = "GetAuthors")]
+        public async Task<IActionResult> Index([FromQuery] ResourceParameters resourceParams)
         {
-            return Ok();
+            var result = await _authorService.GetAllAuthors(resourceParams);
+            var paginationMetadata = new
+            {
+                totalCount = result.TotalCount,
+                pageSize = result.PageSize,
+                currentPage = result.CurrentPage,
+                totalPages = result.TotalPages,
+            };
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
+            var links = _resourceUtil.CreateLinksFoPaginations(Url, "GetAllBooks", resourceParams, result.HasNext, result.HasPrevious);
+
+            return Ok(new { value = result, links });
         }
 
         [HttpGet("{Id}", Name ="GetAuthorById")]

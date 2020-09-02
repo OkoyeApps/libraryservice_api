@@ -8,6 +8,6 @@ namespace Library.Domain.Models
     {
         public string Subject { get; set; }
         public long Expires { get; set; }
-        public IDictionary<string, string> Claims { get; set; }
+        public dynamic[] Claims { get; set; }
     }
 }

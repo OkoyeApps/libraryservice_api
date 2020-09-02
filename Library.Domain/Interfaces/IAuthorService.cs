@@ -1,5 +1,6 @@
 ﻿using Library.Domain.Dtos;
 using Library.Domain.Entities;
+using Library.Domain.Models;
 using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,6 @@ namespace Library.Domain.Interfaces
         Task<(bool, string)> AddAuthor(Author AuthorModel);
         Task<Author> GetAuthorById(ObjectId Id);
         Task<IEnumerable<AuthorAndBooksDto>> GetAuthorsAndAuthorBooks (ObjectId AuthorId);
+        Task<PagedList<Author>> GetAllAuthors(ResourceParameters resourceParams);
     }
 }

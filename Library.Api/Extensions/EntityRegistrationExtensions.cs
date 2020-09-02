@@ -1,4 +1,5 @@
 ﻿using Library.Api.Services;
+using Library.Api.Utilities;
 using Library.Domain.DBQueries;
 using Library.Domain.Interfaces;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,9 @@ namespace Library.Api.Extensions
             services.AddTransient<IBookService, BookServices>();
             services.AddTransient(typeof(AuthorQueries));
             services.AddTransient<IAuthService, AuthServices>();
+            services.AddTransient<IRentalService, RentalServices>();
+            services.AddTransient<IResourceUtil, ResourceUtil>();
+
         }
     }
 }

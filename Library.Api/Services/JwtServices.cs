@@ -37,7 +37,7 @@ namespace Library.Api.Services
                 IssuerSigningKey = issurerSigninKey,
                 ValidIssuer = _options.Issuer,
                 ValidAudience = _options.ValidAudience,
-          
+                ValidateAudience = false,
             };
         }
 
@@ -91,7 +91,7 @@ namespace Library.Api.Services
             {
                 Subject = jwt.Subject,
                 Expires = jwt.ValidTo.ToTimestamp(),
-                Claims = jwt.Claims.Where(x => DefaultClaims.Contains(x.Type)).ToDictionary(x => x.Type, y => y.Value)
+                Claims = jwt.Claims.Where(x => DefaultClaims.Contains(x.Type)).ToArray()
             };
         }
     }

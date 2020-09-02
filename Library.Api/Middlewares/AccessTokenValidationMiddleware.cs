@@ -18,14 +18,21 @@ namespace Library.Api.Middlewares
         }
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            var number = 1;
-            //fix this function later
-            if (number == 1)
+            var token =(string) context.Request.Headers["Authorization"];
+            if (!string.IsNullOrWhiteSpace(token))
             {
-                await next(context);
+                token = token.Replace("Bearer ", "");
+                var result = _accessTokenService.IsActiveAsync(token);
+                if (result.Item1)
+                {
+                    context.Request.Headers["user_id"] = result.Item2.Subject;
+                    await next(context);
+                    return;
+                }
+                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 return;
             }
-            context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            await next(context);
         }
     }
 }

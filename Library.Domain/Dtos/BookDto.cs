@@ -14,4 +14,8 @@ namespace Library.Domain.Dtos
         public long Total_Copies { get; set; }
         public string Publisher { get; set; }
     }
+    public class BookRentDto
+    {
+        public string BookId { get; set; }
+    }
 }

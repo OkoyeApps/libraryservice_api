@@ -1,6 +1,7 @@
 ﻿using Library.Domain.DbContext;
 using Library.Domain.Entities;
 using Library.Domain.Interfaces;
+using Library.Domain.Models;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -35,9 +36,10 @@ namespace Library.Api.Services
             }
         }
 
-        public async Task<IEnumerable<Book>> GetAllBooks()
+        public async Task<PagedList<Book>> GetAllBooks(ResourceParameters resourceParams)
         {
-            return await Collection.AsQueryable().ToListAsync() ;
+            var queryalbe = Collection.AsQueryable();
+            return PagedList<Book>.Create(queryalbe, resourceParams.PageNumber, resourceParams.PageSize);
         }
 
         public async Task<Book> GetBookById(ObjectId Id)

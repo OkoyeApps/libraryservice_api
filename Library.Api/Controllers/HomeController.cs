@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Library.Domain.Interfaces;
+using Library.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -22,20 +23,19 @@ namespace Library.Api.Controllers
         {
             _jwtHandler = jwtHandler;
         }
-        [Route("index")]
-        public IActionResult Index()
+
+        [HttpGet(Name = "GetRoot")]
+        public IActionResult GetRoot()
         {
-            return Ok("in the home");
+            var links = new List<LinkDto>();
+            links.Add(new LinkDto(Url.Link("GetRoot", new { }), "self", "GET"));
+            links.Add(new LinkDto(Url.Link("GetAuthors", new { }), "authors", "GET"));
+            links.Add(new LinkDto(Url.Link("GetAllBooks", new { }), "books", "GET"));
+            return Ok(links);
+
         }
 
-        
-        [Route("Authenticate")]
-        public IActionResult Authenticate()
-        {
-            var result = _jwtHandler.GenerateToken("1", new Dictionary<string, string> { { "granny", "oduko" } });
-            return Ok(result);
-        }
-
+        [HttpGet]
         [Route("secret")]
         [Authorize]
         public IActionResult Secret()

@@ -1,4 +1,5 @@
 ﻿using Library.Domain.Entities;
+using Library.Domain.Models;
 using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Library.Domain.Interfaces
     {
         Task<(bool, string)> AddBook(Book AuthorModel);
         Task<Book> GetBookById(ObjectId Id);
-        Task<IEnumerable<Book>> GetAllBooks();
+        Task<PagedList<Book>> GetAllBooks(ResourceParameters resourceParams);
         Task<IEnumerable<Book>> GetBooksByAuthorId(ObjectId Author);
     }
 }

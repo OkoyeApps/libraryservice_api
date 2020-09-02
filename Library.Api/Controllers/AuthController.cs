@@ -22,10 +22,7 @@ namespace Library.Api.Controllers
             this._authService = authService;
             this._mapper = mapper;
         }
-        public IActionResult Index()
-        {
-            return Ok();
-        }
+
         
        [HttpPost("register", Name ="RegisterUser")]
         public async Task<IActionResult> Register(UserAuthDto model)
