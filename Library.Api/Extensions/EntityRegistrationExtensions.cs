@@ -24,7 +24,7 @@ namespace Library.Api.Extensions
             services.AddTransient<IAuthorService, AuthorServices>();
             services.AddTransient<IBookService, BookServices>();
             services.AddTransient(typeof(AuthorQueries));
-            //services.Ad
+            services.AddTransient<IAuthService, AuthServices>();
         }
     }
 }

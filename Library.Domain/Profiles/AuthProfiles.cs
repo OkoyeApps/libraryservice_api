@@ -11,7 +11,7 @@ namespace Library.Domain.Profiles
     {
         public AuthProfiles()
         {
-            CreateMap<UserRegistrationDto, User>();
+            CreateMap<UserAuthDto, User>();
         }
     }
 }

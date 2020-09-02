@@ -15,6 +15,8 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using BCrypt.Net;
+using Library.Domain.Models;
 
 namespace Library.Api.Services
 {
@@ -22,33 +24,20 @@ namespace Library.Api.Services
     {
         private readonly IMongoCollection<User> Collection;
         private readonly ILogger<AuthServices> _logger;
-        public AuthServices(IDbContext dbContext, ILogger<AuthServices> logger)
+        private readonly IJwtHandler _jwtHandler;
+
+        public AuthServices(IDbContext dbContext, ILogger<AuthServices> logger, IJwtHandler jwtHandler)
         {
             this.Collection = dbContext?.Database.GetCollection<User>($"{nameof(User)}s") ?? throw new ArgumentNullException(nameof(dbContext));
             this._logger = logger;
-        }
-        public string GenerateHash(string password)
-        {
-            byte[] salt = new byte[128 / 8];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(salt);
-            }
-            // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
-            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA256,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8));
-
-            return hashed;
+            this._jwtHandler = jwtHandler;
         }
 
         public async Task<bool> RegisterUser(User userModel)
         {
             try
             {
+                userModel.Password = BCrypt.Net.BCrypt.HashPassword(userModel.Password);
                 await Collection.InsertOneAsync(userModel, new InsertOneOptions { BypassDocumentValidation = false });
                 return true;
             }
@@ -57,6 +46,22 @@ namespace Library.Api.Services
                 _logger.LogError("User creation failed", ex);
                 return false;
             }
+        }
+
+        public async Task<JsonWebToken> SigninUser(UserAuthDto model)
+        {
+            var queryResult = await Collection.FindAsync(x => x.Username == model.Username);
+            var userDetails = queryResult.FirstOrDefault();
+            if (userDetails is null)
+            {
+                return null;
+            }
+            var isValidPassword = BCrypt.Net.BCrypt.Verify(model.Password, userDetails.Password);
+            if (!isValidPassword)
+            {
+                return null;
+            }
+            return _jwtHandler.GenerateToken(userDetails.Id.ToString(), null);
         }
     }
 }

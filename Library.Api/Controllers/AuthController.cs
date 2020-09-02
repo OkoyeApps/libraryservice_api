@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Library.Api.Controllers
 {
     [ApiController]
-    [Route("api/auth")]
+    [Route("api/auth/")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -26,10 +26,15 @@ namespace Library.Api.Controllers
         {
             return Ok();
         }
-
-        public async Task<IActionResult> Register(UserRegistrationDto model)
+        
+       [HttpPost("register", Name ="RegisterUser")]
+        public async Task<IActionResult> Register(UserAuthDto model)
         {
-            var userModel = _mapper.Map<UserRegistrationDto, User>(model);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var userModel = _mapper.Map<UserAuthDto, User>(model);
           var result = await  _authService.RegisterUser(userModel);
             if (!result)
             {
@@ -37,5 +42,21 @@ namespace Library.Api.Controllers
             }
             return Ok(new { message = "Registration successful" });
         }
+
+        [HttpPost("authenticate", Name = "Authenticate")]
+        public async Task<IActionResult> Authenticate(UserAuthDto model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var result = await _authService.SigninUser(model);
+            if (result is null)
+            {
+                return BadRequest(new { message = "invalid credentials"});
+            }
+            return Ok(result);
+        }
+
     }
 }

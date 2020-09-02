@@ -1,5 +1,6 @@
 ﻿using Library.Domain.Dtos;
 using Library.Domain.Entities;
+using Library.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +11,6 @@ namespace Library.Domain.Interfaces
     public interface IAuthService
     {
         Task<bool> RegisterUser(User userModel);
-        string GenerateHash(string password);
+        Task<JsonWebToken> SigninUser(UserAuthDto model);
     }
 }

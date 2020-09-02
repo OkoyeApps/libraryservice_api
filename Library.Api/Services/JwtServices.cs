@@ -37,6 +37,7 @@ namespace Library.Api.Services
                 IssuerSigningKey = issurerSigninKey,
                 ValidIssuer = _options.Issuer,
                 ValidAudience = _options.ValidAudience,
+          
             };
         }
 
@@ -74,7 +75,7 @@ namespace Library.Api.Services
                 AccessToken = token,
                 Expires = expires.ToTimestamp(),
                 Id = userId,
-                Claims = customClaims.ToDictionary(x => x.Type, c => c.Value)
+                Claims = customClaims
             };
         }
 
