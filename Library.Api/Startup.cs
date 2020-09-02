@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Library.Api.Extensions;
 using Library.Api.Services;
 using Library.Domain.DbContext;
 using Library.Domain.Interfaces;
+using Library.Domain.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -29,16 +31,9 @@ namespace Library.Api
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionstring = Configuration.GetSection("DefaultConnection:ConnectionString").Value;
-            string dbName = Configuration.GetSection("DefaultConnection:DataBaseName").Value;
+            services.AddMongoConnection();
             services.AddJwt();
-            
-            //services.AddAuthentication("OAuth").AddJwtBearer("OAuth", config =>
-            //{
 
-            //});
-
-            services.AddTransient<IDbContext, LibraryDbContext>(ctx => LibraryDbContext.Create(connectionstring, dbName));
             services.Configure<MvcOptions>(config =>
             {
                 var newtonSoftJsonOutputFormatter = config.OutputFormatters.OfType<NewtonsoftJsonOutputFormatter>()?.FirstOrDefault();
@@ -47,6 +42,9 @@ namespace Library.Api
                     newtonSoftJsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.marvin.hateoad+json");
                 }
             });
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddEntityServices();
 
             services.AddControllers(setupAction =>
             {
@@ -69,7 +67,7 @@ namespace Library.Api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
+                endpoints.MapControllers();
             });
         }
     }

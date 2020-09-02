@@ -1,4 +1,4 @@
-﻿using Library.Api.Extensions;
+﻿using Library.Domain.Extensions;
 using Library.Domain.Interfaces;
 using Library.Domain.Models;
 using Microsoft.IdentityModel.Tokens;
@@ -37,8 +37,6 @@ namespace Library.Api.Services
                 IssuerSigningKey = issurerSigninKey,
                 ValidIssuer = _options.Issuer,
                 ValidAudience = _options.ValidAudience,
-                //ValidateAudience = _options.ValidateAudience,
-                //ValidateLifetime = _options.ValidateLifetime
             };
         }
 

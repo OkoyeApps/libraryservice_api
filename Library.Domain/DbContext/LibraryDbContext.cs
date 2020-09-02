@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using Library.Domain.Models;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,19 +14,15 @@ namespace Library.Domain.DbContext
             return Database.GetCollection<T>(collectionName);
         }
 
-        public static LibraryDbContext Create(string connectionString, string dbName)
+
+
+        public  LibraryDbContext (MongoClientOptions Options)
         {
-            MongoClientSettings settings = MongoClientSettings.FromUrl(new MongoUrl(connectionString));
+            MongoClientSettings settings = MongoClientSettings.FromUrl(new MongoUrl(Options.ConnectionString));
             settings.SslSettings = new SslSettings() { EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12 };
 
-
-
-            var client = new MongoClient(connectionString);
-            var dbcontext = (LibraryDbContext)Activator.CreateInstance(typeof(LibraryDbContext));
-            //LibraryDbContext dbcontext = new LibraryDbContext();
-            dbcontext.Database = client.GetDatabase(dbName);
-
-            return dbcontext;
+            var client = new MongoClient(settings);
+            Database = client.GetDatabase(Options.DataBaseName);
         }
 
     }
