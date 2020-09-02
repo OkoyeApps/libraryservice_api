@@ -1,8 +1,6 @@
 ﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Dynamic;
 
 namespace Library.Domain.Entities
 {
@@ -10,13 +8,10 @@ namespace Library.Domain.Entities
     {
         public User() : base()
         {
-            this.Claims = new Dictionary<string, string>();
-            this.Id = ObjectId.GenerateNewId(now);
+            this.Claims = new BsonArray();
         }
-        [BsonId]
-        public ObjectId Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public IDictionary<string, string> Claims { get; set; }
+        public BsonArray Claims { get; set; }
     }
 }

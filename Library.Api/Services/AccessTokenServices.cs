@@ -1,4 +1,5 @@
 ﻿using Library.Domain.Interfaces;
+using Library.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,20 @@ namespace Library.Api.Services
 {
     public class AccessTokenServices : IAccessTokenService
     {
-        public Task<bool> IsActiveAsync(string token)
+        private readonly IJwtHandler _jwtHandler;
+
+        public AccessTokenServices(IJwtHandler jwtHandler)
         {
-            throw new NotImplementedException();
+            _jwtHandler = jwtHandler;
+        }
+        public (bool, JsonWebTokenPayload) IsActiveAsync(string token)
+        {
+            var result = _jwtHandler.GetTokenPayload(token);
+            if (result is null)
+            {
+                return (false, null);
+            }
+            return (true, result);
         }
     }
 }

@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace Library.Domain.Entities
 {
-   public  class Book
+   public  class Book : BaseEntity
     {
         public Book()
         {
-            var now = DateTime.UtcNow;
-            this.Id = ObjectId.GenerateNewId(now);
+            //var now = DateTime.UtcNow;
+            //this.Id = ObjectId.GenerateNewId(now);
         }
-        [BsonId]
-        public ObjectId Id { get; private set; }
+        //[BsonId]
+        //public ObjectId Id { get; private set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string TotalPages { get; set; }
@@ -24,5 +24,6 @@ namespace Library.Domain.Entities
         public ObjectId Author { get; set; } //this is the author id as a reference here
         public string Isbn { get; set; }
         public string Publisher { get; set; }
+        public long Copies_on_Rent { get; set; }
     }
 }
