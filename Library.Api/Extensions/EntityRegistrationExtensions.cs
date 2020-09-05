@@ -2,6 +2,7 @@
 using Library.Api.Utilities;
 using Library.Domain.DBQueries;
 using Library.Domain.Interfaces;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -28,6 +29,7 @@ namespace Library.Api.Extensions
             services.AddTransient<IAuthService, AuthServices>();
             services.AddTransient<IRentalService, RentalServices>();
             services.AddTransient<IResourceUtil, ResourceUtil>();
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
         }
     }

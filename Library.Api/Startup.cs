@@ -25,12 +25,15 @@ namespace Library.Api
 {
     public class Startup
     {
+        public readonly IServiceCollection _services;
+
         public IConfiguration Configuration { get; set; }
         //private static readonly string[] Headers = new[] { "X-Operation", "X-Resource", "X-Total-Count", "X-Pagination" };
 
         public Startup(IConfiguration _config)
         {
             Configuration = _config;
+            //this._services = services;
         }
         public void ConfigureServices(IServiceCollection services)
         {

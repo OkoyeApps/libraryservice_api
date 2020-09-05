@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Library.Domain.Interfaces;
 using Library.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Library.Api.Controllers
 {
@@ -17,11 +10,9 @@ namespace Library.Api.Controllers
     [Route("api/home")]
     public class HomeController : ControllerBase
     {
-        private readonly IJwtHandler _jwtHandler;
-
-        public HomeController(IJwtHandler jwtHandler)
+        public HomeController()
         {
-            _jwtHandler = jwtHandler;
+          
         }
 
         [HttpGet(Name = "GetRoot")]
@@ -33,15 +24,6 @@ namespace Library.Api.Controllers
             links.Add(new LinkDto(Url.Link("GetAllBooks", new { }), "books", "GET"));
             return Ok(links);
 
-        }
-
-        [HttpGet]
-        [Route("secret")]
-        [Authorize]
-        public IActionResult Secret()
-        {
-            var aa = Request;
-            return Ok();
         }
     }
 }

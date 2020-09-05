@@ -8,8 +8,8 @@ namespace Library.Domain.Interfaces
 {
     public interface IResourceUtil
     {
-        string CreatePaginationResourceUri(IUrlHelper Url,string actionName, ResourceParameters ResourceParameters, ResourceUriType type);
-        IEnumerable<LinkDto> CreateLinksFoPaginations(IUrlHelper Url, string actionName, ResourceParameters ResourceParameters, bool hasNext, bool hasPrevious);
-        IEnumerable<LinkDto> CreateLinksForContoller(IUrlHelper Url, IList<ControllerLink> ActionLinks);
+        string CreatePaginationResourceUri(string actionName, ResourceParameters ResourceParameters, ResourceUriType type);
+        IEnumerable<LinkDto> CreateLinksFoPaginations( string actionName, ResourceParameters ResourceParameters, bool hasNext, bool hasPrevious);
+        IEnumerable<LinkDto> CreateLinksForContoller( IList<ControllerLink> ActionLinks);
     }
 }

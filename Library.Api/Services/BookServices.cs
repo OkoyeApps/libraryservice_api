@@ -31,7 +31,7 @@ namespace Library.Api.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError("Insert of appraisal configuration failed", ex);
+                _logger.LogError("saving of Author failed", ex);
                 return (false, ex.Message);
             }
         }
@@ -46,7 +46,6 @@ namespace Library.Api.Services
         { 
             var result =  await Collection.FindAsync(x => x.Id == Id);
             return result.FirstOrDefault();
-            
         }
 
         public async Task<IEnumerable<Book>> GetBooksByAuthorId(ObjectId Author)

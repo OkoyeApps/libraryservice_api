@@ -42,7 +42,7 @@ namespace Library.Api.Controllers
                 totalPages = result.TotalPages,
             };
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
-            var links = _resourceUtil.CreateLinksFoPaginations(Url, "GetAllBooks", resourceParams, result.HasNext, result.HasPrevious);
+            var links = _resourceUtil.CreateLinksFoPaginations("GetAuthors", resourceParams, result.HasNext, result.HasPrevious);
 
             return Ok(new { value = result, links });
         }

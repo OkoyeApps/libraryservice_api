@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Domain", "Library.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Api", "Library.Api\Library.Api.csproj", "{EA982219-D1A6-46F2-8B78-5EA5233192E7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{73C0CFAE-37CB-43DE-BE90-F3E750631BCC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Test", "Library.Test\Library.Test.csproj", "{05B57401-5BA0-4A90-8E6D-DC12DE255581}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +23,10 @@ Global
 		{EA982219-D1A6-46F2-8B78-5EA5233192E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA982219-D1A6-46F2-8B78-5EA5233192E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA982219-D1A6-46F2-8B78-5EA5233192E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05B57401-5BA0-4A90-8E6D-DC12DE255581}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05B57401-5BA0-4A90-8E6D-DC12DE255581}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05B57401-5BA0-4A90-8E6D-DC12DE255581}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05B57401-5BA0-4A90-8E6D-DC12DE255581}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

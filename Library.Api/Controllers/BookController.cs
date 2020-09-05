@@ -25,6 +25,10 @@ namespace Library.Api.Controllers
         private readonly IResourceUtil _resourceUtil;
         private readonly IMapper _mapper;
 
+        public BookController()
+        {
+
+        }
         public BookController(IBookService bookService, IRentalService rentalService, IResourceUtil resourceUtil, IMapper mapper)
         {
             this._bookService = bookService;
@@ -49,7 +53,7 @@ namespace Library.Api.Controllers
                 totalPages = result.TotalPages,
             };
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
-            var links = _resourceUtil.CreateLinksFoPaginations(Url, "GetAllBooks", resourceParams, result.HasNext, result.HasPrevious);
+            var links = _resourceUtil.CreateLinksFoPaginations("GetAllBooks", resourceParams, result.HasNext, result.HasPrevious);
             
             return Ok(new {value = result, links });
         }
