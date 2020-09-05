@@ -18,7 +18,7 @@ services:
     environment:
     - ASPNETCORE_ENVIRONMENT=Production
    # - DefaultConnection__ConnectionString=mongodb://root:example@Mongo_db:27017/library/?authSource=admin
-    - DefaultConnection__ConnectionString=mongodb+srv://emma:%40A1234567@lawyerpp-cluster-5faak.mongodb.net/EdgeAppraisal?retryWrites=true&w=majority
+    - DefaultConnection__ConnectionString=mongodb+srv://emma:%40A1234567@emmanuelcluster.qygds.mongodb.net/library?retryWrites=true&w=majority
     - DefaultConnection__DataBaseName=library
     - JwtOptions__ValidAudience=https://localhost:8081
     - JwtOptions__Issuer=https://localhost:8081
