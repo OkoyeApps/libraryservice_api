@@ -1,3 +1,7 @@
+# The DefaultConnection__ConnectionString commented is because docker aggrgation and transaction only works
+# on clusters and at such i had to provide a url to mongo atlas that supports cluster
+# this was added for local development with docker
+
 version: '3'
 services:
   Mongo_db:
@@ -13,7 +17,8 @@ services:
       - "8081:80"
     environment:
     - ASPNETCORE_ENVIRONMENT=Production
-    - DefaultConnection__ConnectionString=mongodb://root:example@Mongo_db:27017/library/?authSource=admin
+   # - DefaultConnection__ConnectionString=mongodb://root:example@Mongo_db:27017/library/?authSource=admin
+    - DefaultConnection__ConnectionString=mongodb+srv://emma:%40A1234567@lawyerpp-cluster-5faak.mongodb.net/EdgeAppraisal?retryWrites=true&w=majority
     - DefaultConnection__DataBaseName=library
     - JwtOptions__ValidAudience=https://localhost:8081
     - JwtOptions__Issuer=https://localhost:8081
