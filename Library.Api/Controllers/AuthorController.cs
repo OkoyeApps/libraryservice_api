@@ -47,6 +47,12 @@ namespace Library.Api.Controllers
             return Ok(new { value = result, links });
         }
 
+        /// <summary>
+        /// Get authors by Id
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+
         [HttpGet("{Id}", Name ="GetAuthorById")]
         public async Task<IActionResult> GetAuthorById(string Id)
         {
@@ -61,6 +67,11 @@ namespace Library.Api.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Add Authors
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost(Name ="AddAuthor")]
         public async Task<IActionResult> AddAuthor(Author model)
         {
@@ -73,6 +84,11 @@ namespace Library.Api.Controllers
             return CreatedAtRoute("GetAuthorById", new { Id = model.Id.ToString() }, model);
         }
 
+        /// <summary>
+        /// Get all books by a specific author
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         [HttpGet("{Id}/allbooks", Name ="GetAuthorAndBooks")]
         public async Task<IActionResult> GetAuthorAndBooks(string Id)
         {
