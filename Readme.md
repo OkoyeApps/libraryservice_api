@@ -1,4 +1,4 @@
-# libraryservice_api
+# Simple Library Service Api
 libraryservice_api is a simple api service that allows simulate an online library system where users can borrow and return books like they would their local libraries
 
 # Tools
